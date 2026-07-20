@@ -1,9 +1,19 @@
-org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 
-android.useAndroidX=true
-android.enableJetifier=true
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 
-kotlin.code.style=official
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
 
-org.gradle.parallel=true
-org.gradle.caching=true
+rootProject.name = "TikTok-for-android-tv"
+include(":app")
