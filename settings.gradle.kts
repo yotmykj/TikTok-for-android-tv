@@ -1,28 +1,9 @@
-pluginManagement {
-    repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
-        mavenCentral()
-        gradlePluginPortal()
-    }
-}
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
-}
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://maven.mozilla.org/maven2/") }
-    }
-}
+org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8
 
-rootProject.name = "TikTok x Sleppify"
-include(":app")
- 
+android.useAndroidX=true
+android.enableJetifier=true
+
+kotlin.code.style=official
+
+org.gradle.parallel=true
+org.gradle.caching=true
