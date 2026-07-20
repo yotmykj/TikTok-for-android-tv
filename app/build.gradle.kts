@@ -51,7 +51,6 @@ dependencies {
     implementation("androidx.compose.ui:ui:1.6.1")
     implementation("androidx.compose.foundation:foundation:1.6.1")
     implementation("androidx.compose.material3:material3:1.2.0")
-    implementation("androidx.tv:tv-foundation:1.0.0-alpha11")
-    implementation("androidx.tv:tv-material:1.0.0-alpha11")
+    implementation("androidx.compose.material3:material3:1.2.0")
     implementation("androidx.browser:browser:1.7.0")
 }
