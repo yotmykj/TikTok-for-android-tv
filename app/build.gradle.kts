@@ -1,5 +1,7 @@
 plugins {
     id("com.android.application")
+    // Добавляем обязательный для Kotlin 2.0+ плагин Compose
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -27,11 +29,8 @@ android {
     }
     
     buildFeatures {
+        // Оставляем только этот флаг, composeOptions больше не нужен
         compose = true
-    }
-    
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
     }
 }
 
