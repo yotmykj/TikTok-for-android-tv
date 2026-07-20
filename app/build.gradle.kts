@@ -1,6 +1,5 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -29,7 +28,6 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
-        // Включаем поддержку Jetpack Compose в проекте
         compose = true
     }
     composeOptions {
