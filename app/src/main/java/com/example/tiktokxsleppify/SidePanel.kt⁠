@@ -1,0 +1,58 @@
+package com.example.tiktokxsleppify
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.tv.material3.*
+
+@OptIn(ExperimentalTvMaterial3Api::class)
+@Composable
+fun SidePanel(
+    onNavigate: (String) -> Unit,
+    onClose: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .width(260.dp)
+            .background(Color(0xFF121212))
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        Text(
+            text = "FixTok Menu",
+            style = MaterialTheme.typography.headlineMedium,
+            color = Color.White,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        val menuItems = listOf(
+            "Home" to "https://www.tiktok.com/",
+            "Search" to "https://www.tiktok.com/search",
+            "Following" to "https://www.tiktok.com/following",
+            "Profile" to "https://www.tiktok.com/profile"
+        )
+
+        menuItems.forEach { (label, url) ->
+            Button(
+                onClick = { onNavigate(url) },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = label, style = MaterialTheme.typography.bodyLarge)
+            }
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Button(
+            onClick = onClose,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.colors(containerColor = Color(0xFF2A2A2A))
+        ) {
+            Text("Закрыть меню", color = Color.White)
+        }
+    }
+}
