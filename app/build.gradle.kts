@@ -1,38 +1,59 @@
 plugins {
-    alias(libs.plugins.android.application)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
     namespace = "com.example.tiktokxsleppify"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.tiktokxsleppify"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 14
-        versionName = "1.15"
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        // Включаем поддержку Jetpack Compose в проекте
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.8"
+    }
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.browser)
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    
+    // Поддержка ViewModel внутри Compose платформ
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.activity:activity-compose:1.8.2")
+    
+    // Фундаментальные библиотеки Jetpack Compose
+    implementation("androidx.compose.ui:ui:1.6.1")
+    implementation("androidx.compose.foundation:foundation:1.6.1")
+    implementation("androidx.compose.material3:material3:1.2.0")
+    
+    // Специализированные библиотеки Jetpack Compose для Android TV
+    implementation("androidx.tv:tv-foundation:1.0.0-alpha11")
+    implementation("androidx.tv:tv-material:1.0.0-alpha11")
+    
+    // Браузерный fallback (Custom Tabs)
+    implementation("androidx.browser:browser:1.7.0")
 }
