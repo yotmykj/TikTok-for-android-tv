@@ -1,0 +1,93 @@
+package com.example.tiktokxsleppify
+
+import android.annotation.SuppressLint
+import android.view.KeyEvent
+import android.webkit.CookieManager
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.viewinterop.AndroidView
+
+@SuppressLint("SetJavaScriptEnabled")
+@Composable
+fun TikTokWebView(
+    url: String,
+    modifier: Modifier = Modifier,
+    onOpenSidebar: () -> Unit,
+    onFocusActions: () -> Unit
+) {
+    AndroidView(
+        modifier = modifier.onKeyEvent { event ->
+            if (event.nativeKeyEvent.action == KeyEvent.ACTION_DOWN) {
+                when (event.nativeKeyEvent.keyCode) {
+                    KeyEvent.KEYCODE_DPAD_LEFT -> {
+                        onOpenSidebar()
+                        true
+                    }
+                    KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                        onFocusActions()
+                        true
+                    }
+                    else -> false
+                }
+            } else {
+                false
+            }
+        },
+        factory = { context ->
+            WebView(context).apply {
+                settings.apply {
+                    javaScriptEnabled = true
+                    domStorageEnabled = true
+                    mediaPlaybackRequiresUserGesture = false
+                    loadsImagesAutomatically = true
+                    userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                }
+
+                CookieManager.getInstance().apply {
+                    setAcceptCookie(true)
+                    setAcceptThirdPartyCookies(this@apply, true)
+                }
+
+                setLayerType(WebView.LAYER_TYPE_HARDWARE, null)
+                webChromeClient = WebChromeClient()
+                webViewClient = object : WebViewClient() {
+                    override fun onReceivedError(
+                        view: WebView?,
+                        request: WebResourceRequest?,
+                        error: WebResourceError?
+                    ) {
+                        super.onReceivedError(view, request, error)
+                    }
+                }
+                
+                setOnKeyListener { _, keyCode, event ->
+                    if (event.action == KeyEvent.ACTION_DOWN) {
+                        when (keyCode) {
+                            KeyEvent.KEYCODE_DPAD_UP -> {
+                                evaluateJavascript("window.scrollBy(0, -300);", null)
+                                return@setOnKeyListener true
+                            }
+                            KeyEvent.KEYCODE_DPAD_DOWN -> {
+                                evaluateJavascript("window.scrollBy(0, 300);", null)
+                                return@setOnKeyListener true
+                            }
+                        }
+                    }
+                    false
+                }
+                loadUrl(url)
+            }
+        },
+        update = { webView ->
+            if (webView.url != url) {
+                webView.loadUrl(url)
+            }
+        }
+    )
+}
